@@ -39,7 +39,7 @@ namespace BustupParamEditor
                 Console.WriteLine($"(7) Unknown Flag: {pEntry.Unknown}");
                 Console.WriteLine($"(0) Save Changes and Exit");
                 int selection = 11;
-                while (selection > 7 && selection < -1)
+                while (selection > 7 || selection < 0)
                 {
                     try
                     {
