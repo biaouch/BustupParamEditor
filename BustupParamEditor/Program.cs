@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BustupParamEditor.IO;
 
 namespace BustupParamEditor
 {
@@ -68,41 +69,41 @@ namespace BustupParamEditor
                         pEntry.Replace(pEntry.EntryData, paramId, path, pEntry.Type);
                         return;
                     case 1: // Offset X
-                        pEntry.Read(ParamEntry.WriteFloat(pEntry.EntryData, 8, newValue));
+                        pEntry.Read(ParamEntry.Write(pEntry.EntryData, 8, newValue));
                         break;
                     case 2: // Offset Y
                         if (pEntry.Type == ParamEntry.ParamType.Normal)
-                            pEntry.Read(ParamEntry.WriteFloat(pEntry.EntryData, 12, newValue));
+                            pEntry.Read(ParamEntry.Write(pEntry.EntryData, 12, newValue));
                         break;
                     case 3: // Eye Pos X
                         if (pEntry.Type == ParamEntry.ParamType.Normal)
-                            pEntry.Read(ParamEntry.WriteFloat(pEntry.EntryData, 16, newValue));
+                            pEntry.Read(ParamEntry.Write(pEntry.EntryData, 16, newValue));
                         else
-                            pEntry.Read(ParamEntry.WriteFloat(pEntry.EntryData, 12, newValue));
+                            pEntry.Read(ParamEntry.Write(pEntry.EntryData, 12, newValue));
                         break;
                     case 4: // Eye Pos Y
                         if (pEntry.Type == ParamEntry.ParamType.Normal)
-                            pEntry.Read(ParamEntry.WriteFloat(pEntry.EntryData, 20, newValue));
+                            pEntry.Read(ParamEntry.Write(pEntry.EntryData, 20, newValue));
                         else
-                            pEntry.Read(ParamEntry.WriteFloat(pEntry.EntryData, 16, newValue));
+                            pEntry.Read(ParamEntry.Write(pEntry.EntryData, 16, newValue));
                         break;
                     case 5: // Mouth Pos X
                         if (pEntry.Type == ParamEntry.ParamType.Normal)
-                            pEntry.Read(ParamEntry.WriteFloat(pEntry.EntryData, 24, newValue));
+                            pEntry.Read(ParamEntry.Write(pEntry.EntryData, 24, newValue));
                         else
-                            pEntry.Read(ParamEntry.WriteFloat(pEntry.EntryData, 20, newValue));
+                            pEntry.Read(ParamEntry.Write(pEntry.EntryData, 20, newValue));
                         break;
                     case 6: // Mouth Pos Y
                         if (pEntry.Type == ParamEntry.ParamType.Normal)
-                            pEntry.Read(ParamEntry.WriteFloat(pEntry.EntryData, 28, newValue));
+                            pEntry.Read(ParamEntry.Write(pEntry.EntryData, 28, newValue));
                         else
-                            pEntry.Read(ParamEntry.WriteFloat(pEntry.EntryData, 24, newValue));
+                            pEntry.Read(ParamEntry.Write(pEntry.EntryData, 24, newValue));
                         break;
                     case 7: // Unknown Field
                         if (pEntry.Type == ParamEntry.ParamType.Normal)
-                            pEntry.Read(ParamEntry.WriteShort(pEntry.EntryData, 34, (short)Math.Round(newValue)));
+                            pEntry.Read(ParamEntry.Write(pEntry.EntryData, 34, (short)Math.Round(newValue)));
                         else
-                            pEntry.Read(ParamEntry.WriteShort(pEntry.EntryData, 30, (short)Math.Round(newValue)));
+                            pEntry.Read(ParamEntry.Write(pEntry.EntryData, 30, (short)Math.Round(newValue)));
                         break;
                     
                 }

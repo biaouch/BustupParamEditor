@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BustupParamEditor.IO;
 
 namespace BustupParamEditor
 {
@@ -35,33 +36,33 @@ namespace BustupParamEditor
         {
             EntryData = entry;
             using (MemoryStream memStream = new MemoryStream(entry))
-            using (BinaryReader reader = new BinaryReader(memStream))
+            using (EndianBinaryReader reader = new EndianBinaryReader(memStream, Endianness.BigEndian))
             {
-                CharacterId = Params.ToShort(reader.ReadByte(), reader.ReadByte()); //2
-                ExpressionId = Params.ToShort(reader.ReadByte(), reader.ReadByte()); //4
-                OutfitId = Params.ToShort(reader.ReadByte(), reader.ReadByte()); //6
+                CharacterId = reader.ReadInt16(); //2
+                ExpressionId = reader.ReadInt16(); //4
+                OutfitId = reader.ReadInt16(); //6
                 reader.ReadBytes(2); //8
-                OffsetX = Params.ReadSingle(reader); //12
+                OffsetX = reader.ReadSingle(); //12
 
                 if (reader.BaseStream.Length == 32)
                 {
-                    EyePositionX = Params.ReadSingle(reader); //16
-                    EyepositionY = Params.ReadSingle(reader); //20
-                    MouthPositionX = Params.ReadSingle(reader); //24
-                    MouthPositionY = Params.ReadSingle(reader); //28
+                    EyePositionX = reader.ReadSingle(); //16
+                    EyepositionY = reader.ReadSingle(); //20
+                    MouthPositionX = reader.ReadSingle(); //24
+                    MouthPositionY = reader.ReadSingle(); //28
                     reader.ReadBytes(2); //30
-                    Unknown = Params.ToShort(reader.ReadByte(), reader.ReadByte()); //32
+                    Unknown = reader.ReadInt16(); //32
                     Type = ParamType.Assist;
                 }
                 else if (reader.BaseStream.Length == 40)
                 {
-                    OffsetY = Params.ReadSingle(reader); //16
-                    EyePositionX = Params.ReadSingle(reader); //20
-                    EyepositionY = Params.ReadSingle(reader); //24
-                    MouthPositionX = Params.ReadSingle(reader); //28
-                    MouthPositionY = Params.ReadSingle(reader); //32
+                    OffsetY = reader.ReadSingle(); //16
+                    EyePositionX = reader.ReadSingle(); //20
+                    EyepositionY = reader.ReadSingle(); //24
+                    MouthPositionX = reader.ReadSingle(); //28
+                    MouthPositionY = reader.ReadSingle(); ; //32
                     reader.ReadBytes(2); //34
-                    Unknown = Params.ToShort(reader.ReadByte(), reader.ReadByte()); //38
+                    Unknown = reader.ReadInt16(); //38
                     reader.ReadSingle(); //40
                     Type = ParamType.Normal;
                 }
@@ -83,26 +84,13 @@ namespace BustupParamEditor
             }
         }
 
-        public static byte[] WriteFloat(byte[] entry, long position, float newValue)
+        public static byte[] Write(byte[] entry, long position, float newValue)
         {
             using (MemoryStream memStream = new MemoryStream(entry))
-            using (BinaryWriter writer = new BinaryWriter(memStream))
+            using (EndianBinaryWriter writer = new EndianBinaryWriter(memStream, Endianness.BigEndian))
             {
                 writer.BaseStream.Seek(position, SeekOrigin.Begin);
-                writer.Write(Params.ReverseSingleEndian(newValue));
-            }
-            return entry;
-        }
-
-        public static byte[] WriteShort(byte[] entry, long position, short newValue)
-        {
-            byte[] shortBytes = BitConverter.GetBytes(newValue);
-            Array.Reverse(shortBytes);
-            using (MemoryStream memStream = new MemoryStream(entry))
-            using (BinaryWriter writer = new BinaryWriter(memStream))
-            {
-                writer.BaseStream.Seek(position, SeekOrigin.Begin);
-                writer.Write(shortBytes);
+                writer.Write(newValue);
             }
             return entry;
         }
