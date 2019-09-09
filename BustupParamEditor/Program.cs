@@ -28,7 +28,6 @@ namespace BustupParamEditor
             //Lists current values, allows user to pick a value and enter a new one, then refresh list of values
             while (true)
             {
-                Console.Clear();
                 Console.WriteLine($"Editing parameters for b{pEntry.CharacterId.ToString("D3")}_{pEntry.ExpressionId.ToString("D3")}_{pEntry.OutfitId.ToString("D2")}");
                 Console.WriteLine("\nChoose which value to replace:");
                 Console.WriteLine($"(1) Offset X: {pEntry.OffsetX}");
