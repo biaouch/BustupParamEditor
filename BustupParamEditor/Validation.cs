@@ -37,9 +37,7 @@ namespace BustupParamEditor
                 catch
                 {
                     Console.WriteLine("Not a valid bustup param file. Please try again.");
-                    Console.ReadKey();
                 }
-                Console.Clear();
             }
             return path;
         }
@@ -73,8 +71,6 @@ namespace BustupParamEditor
                 catch
                 {
                     Console.WriteLine("Not a valid bustup. Please try again.");
-                    Console.ReadKey();
-                    Console.Clear();
                 }
             }
 
